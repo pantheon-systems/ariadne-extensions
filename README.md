@@ -9,7 +9,16 @@ Set of scripts and helper utilities to extend [Ariadne GraphQL library](https://
 ## Features
 
 
-### Federations support
+### Federation support
+
+Support for [Federation Specification](https://www.apollographql.com/docs/apollo-server/federation/federation-spec/)
+
+#### Features
+
+1. Generate federation schema types and directives (`_Any`, `_FieldSet`, ...)
+1. Implements `{_service{sdl}}` query
+1. Detects boundary types and generates `_Entities` union
+1. Resolve reference helpers for boundary types queried over `{_entities}` query
 
 ```
 from os.path import dirname, join
@@ -18,12 +27,12 @@ from ariadne import QueryType, ObjectType, snake_case_fallback_resolvers
 from ariadne_extensions import federation
 
 query_type = QueryType()
-manager = FederatedManager(
+manager = federation.FederatedManager(
     schema_sdl_file=join(dirname(__file__), 'schema.graphql'),
     query=query_type,
 )
 
-user_type = FederatedObjectType('User')
+user_type = federation.FederatedObjectType('User')
 photo_type = ObjectType('Photo')
 
 @user_type.resolve_reference
