@@ -6,8 +6,10 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pytest-cov = "*"
+pylint = "*"
 
 [packages]
+ariadne = "*"
 
 [requires]
 python_version = "3.7"
