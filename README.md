@@ -18,7 +18,7 @@ Support for [Federation Specification](https://www.apollographql.com/docs/apollo
 1. Generate federation schema types and directives (`_Any`, `_FieldSet`, ...)
 1. Implements `{_service{sdl}}` query
 1. Detects boundary types and generates `_Entities` union
-1. Resolve reference helpers for boundary types queried over `{_entities}` query
+1. Implements resolve reference helpers for boundary types queried over `{_entities}` query (`resolve_reference` and `resolve_references` decorators)
 
 ``` python
 from os.path import dirname, join
