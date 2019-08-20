@@ -20,7 +20,7 @@ Support for [Federation Specification](https://www.apollographql.com/docs/apollo
 1. Detects boundary types and generates `_Entities` union
 1. Resolve reference helpers for boundary types queried over `{_entities}` query
 
-```
+``` python
 from os.path import dirname, join
 from ariadne import QueryType, ObjectType, snake_case_fallback_resolvers
 
