@@ -12,7 +12,7 @@ setup(
     name='ariadne-extensions',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.2',
+    version='0.1.3',
     url='https://github.com/aleszoulek/ariadne-extensions',
     author='Ales Zoulek',
     author_email='ales.zoulek@gmail.com',
