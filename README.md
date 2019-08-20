@@ -29,7 +29,7 @@ Support for [Federation Specification](https://www.apollographql.com/docs/apollo
 
 Create a FederatedManager instance passing in path to your schema file and QueryType instance. Manager needs to query_type to register `_entities` and `_service` resolvers.
 
-```
+``` python
 query_type = QueryType()
 manager = federation.FederatedManager(
     schema_sdl_file='/some/path/schema.graphql',
@@ -39,19 +39,17 @@ manager = federation.FederatedManager(
 
 Register any other `ObjectType`s and resolvers by either calling and `add_types` method, or by extending `manager.types` list.
 
-```
+``` python
 photo_type = ObjectType('Photo')
 thumbnail_type = ObjectType('Thumbnail')
 
 manager.add_types(photo_type, thumbnail_type)
-
-
 manager.types.append(snake_case_fallback_resolvers)
 ```
 
 Finally, get a combiled schema. This compiled schema will extend types defined in '/some/path/schema.graphql' with directives, types and queries, that required by Federation Specification protocol.
 
-```
+``` python
 schema = manager.get_schema()
 ```
 
@@ -65,7 +63,7 @@ If you are using GraphQL Federation, your service schema probably implements som
 Let's say `User` is a boundary type, with a single `id` key. You need to implement a function, that will accept a dictionary of keys (`{'id': ...} in our example`) and return a `User` instance.
 FederatedManager will call this function for every `_entities([{__typename: 'User', id: ...}])` query.
 
-```
+``` python
 user_type = federation.FederatedObjectType('User')
 
 @user_type.resolve_reference
@@ -76,7 +74,7 @@ def resolve_user_reference(representation):
 
 `FederatedObjectType` extends Ariadne's `ObjectType`. You can still use the `field` decorator, `set_alias` method and others as in regular `ObjectType`, and others.
 
-```
+``` python
 @user_type.field('name')
 def resolve_billing_account(obj, *_, id):
     return f'{obj.first_name} {obj_last_name}'
@@ -84,7 +82,7 @@ def resolve_billing_account(obj, *_, id):
 
 Don't forget to add `user_type` to our manager.
 
-```
+``` python
 manager.add_types(user_type)
 ```
 
