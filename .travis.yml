@@ -14,3 +14,6 @@ script:
   - pylint ariadne_extensions
   - black --check .
 
+after_success:
+  - coveralls
+
