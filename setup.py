@@ -4,18 +4,17 @@ from os import path
 
 from setuptools import setup
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
-    long_description = f.read()
+with open(path.join(path.abspath(path.dirname(__file__)), "README.md"), encoding="utf-8") as f:
+    LONG_DESCRIPTION = f.read()
 
 
-TEST_DEPENDECIES = ["pytest-cov", "pytest", "pylint", "pytest-runner", "black"]
+TEST_DEPENDECIES = ["pytest-cov", "pytest", "pylint", "pytest-runner", "black", "coveralls"]
 
 INSTALL_DEPENDECIES = ["ariadne"]
 
 setup(
     name="ariadne-extensions",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     version="0.1.3",
     url="https://github.com/aleszoulek/ariadne-extensions",
