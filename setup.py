@@ -4,11 +4,20 @@ from os import path
 
 from setuptools import setup
 
-with open(path.join(path.abspath(path.dirname(__file__)), "README.md"), encoding="utf-8") as f:
+with open(
+    path.join(path.abspath(path.dirname(__file__)), "README.md"), encoding="utf-8"
+) as f:
     LONG_DESCRIPTION = f.read()
 
 
-TEST_DEPENDECIES = ["pytest-cov", "pytest", "pylint", "pytest-runner", "black", "coveralls"]
+TEST_DEPENDECIES = [
+    "pytest-cov",
+    "pytest",
+    "pylint",
+    "pytest-runner",
+    "black",
+    "coveralls",
+]
 
 INSTALL_DEPENDECIES = ["ariadne"]
 
