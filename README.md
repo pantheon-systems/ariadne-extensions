@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/aleszoulek/ariadne-extensions.svg?branch=master)](https://travis-ci.org/aleszoulek/ariadne-extensions)
+
+
 # Ariadne Extensions
 
 Set of scripts and helper utilities to extend [Ariadne GraphQL library](https://github.com/mirumee/ariadne)

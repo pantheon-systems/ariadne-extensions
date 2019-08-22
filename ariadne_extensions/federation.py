@@ -36,7 +36,6 @@ class FederatedObjectType(ObjectType):
         super().__init__(*args, **kwargs)
         self._reference_resolver = None
 
-
     def resolve_reference(self, resolver):
         @functools.wraps(resolver)
         def wrapper(params):
@@ -48,7 +47,6 @@ class FederatedObjectType(ObjectType):
     def resolve_references(self, resolver):
         self._reference_resolver = resolver
         return resolver
-
 
     def bind_to_schema(self, schema):
         super().bind_to_schema(schema)
@@ -68,51 +66,51 @@ class FederatedManager:
 
         self.federated_types = self._get_federated_types()
 
-
     def add_types(self, *types):
         self.types += types
-
 
     def get_schema(self):
         self.query.field("_service")(self._query_service_resolver)
         if self.federated_types:
-            entity_type = UnionType('_Entity')
+            entity_type = UnionType("_Entity")
             self.types.append(entity_type)
 
             entity_type.type_resolver(self._entity_type_resolver)
-            self.query.field('_entities')(self._entities_resolver)
+            self.query.field("_entities")(self._entities_resolver)
 
         return make_executable_schema(self._get_federated_sdl(), self.types)
-
 
     def _get_federated_types(self):
         federated_types = []
         for definition in self.ast_schema.definitions:
             for directive in definition.directives:
-                if directive.name.value == 'key':
+                if directive.name.value == "key":
                     federated_types.append(definition.name.value)
         return federated_types
 
-
     def _has_query_type(self):
         for definition in self.ast_schema.definitions:
-            if isinstance(definition, ObjectTypeDefinitionNode) and definition.name.value == 'Query':
+            if (
+                isinstance(definition, ObjectTypeDefinitionNode)
+                and definition.name.value == "Query"
+            ):
                 return True
         return False
-
 
     def _get_federated_sdl(self):
         if self.federated_types:
             federation_specs = FEDERATION_SPECS_TEMPLATE.format(
-                entity_query='_entities(representations: [_Any!]!): [_Entity]!',
-                extend_type='extend ' if self._has_query_type() else '',
-                entity_union='union _Entity = {0}'.format(' | '.join(self.federated_types)),
+                entity_query="_entities(representations: [_Any!]!): [_Entity]!",
+                extend_type="extend " if self._has_query_type() else "",
+                entity_union="union _Entity = {0}".format(
+                    " | ".join(self.federated_types)
+                ),
             )
         else:
             federation_specs = FEDERATION_SPECS_TEMPLATE.format(
-                entity_query='',
-                extend_type='extend ' if self._has_query_type() else '',
-                entity_union='',
+                entity_query="",
+                extend_type="extend " if self._has_query_type() else "",
+                entity_union="",
             )
 
         return f"""
@@ -120,31 +118,26 @@ class FederatedManager:
             {self.sdl}
         """
 
-
     def _entity_type_resolver(self, obj, *_):
-        if hasattr(obj, 'AriadneMeta') and hasattr(obj.AriadneMeta, 'entity_name'):
+        if hasattr(obj, "AriadneMeta") and hasattr(obj.AriadneMeta, "entity_name"):
             return obj.AriadneMeta.entity_name
         return obj.__class__.__name__
-
 
     def _entities_resolver(self, obj, info, representations):
         type_ids = defaultdict(list)
         ret = []
 
         for representation in representations:
-            type_name = representation.pop('__typename')
+            type_name = representation.pop("__typename")
             type_ids[type_name].append(representation)
 
         for type_name, params in type_ids.items():
             graphql_type = info.schema.type_map.get(type_name)
-            reference_resolver = getattr(graphql_type, 'reference_resolver', None)
+            reference_resolver = getattr(graphql_type, "reference_resolver", None)
             if reference_resolver:
                 ret += reference_resolver(params)
 
         return ret
 
-
     def _query_service_resolver(self, *_):
-        return {
-            "sdl": self.sdl
-        }
+        return {"sdl": self.sdl}
