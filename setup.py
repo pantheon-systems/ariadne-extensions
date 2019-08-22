@@ -8,6 +8,18 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+
+TEST_DEPENDECIES = [
+    'pytest-cov',
+    'pytest',
+    'pylint',
+    'pytest-runner',
+]
+
+INSTALL_DEPENDECIES = [
+    'ariadne',
+]
+
 setup(
     name='ariadne-extensions',
     long_description=long_description,
@@ -17,8 +29,10 @@ setup(
     author='Ales Zoulek',
     author_email='ales.zoulek@gmail.com',
     packages=['ariadne_extensions'],
-    tests_require=['pytest'],
-    setup_requires=['pytest-runner'],
-    install_requires=[
-    ],
+    setup_requires=[],
+    install_requires=INSTALL_DEPENDECIES,
+    tests_require=TEST_DEPENDECIES,
+    extras_require={
+        'test': TEST_DEPENDECIES,
+    }
 )

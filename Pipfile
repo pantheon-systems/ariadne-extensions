@@ -8,6 +8,7 @@ pytest = "*"
 pytest-cov = "*"
 pylint = "*"
 ipython = "*"
+black = "==19.3b0"
 
 [packages]
 ariadne = "*"
