@@ -1,13 +1,13 @@
 # Ariadne Extensions
 
-[![Build Status](https://travis-ci.org/aleszoulek/ariadne-extensions.svg?branch=master)](https://travis-ci.org/aleszoulek/ariadne-extensions)
-[![Coverage Status](https://coveralls.io/repos/github/aleszoulek/ariadne-extensions/badge.svg?branch=master)](https://coveralls.io/github/aleszoulek/ariadne-extensions?branch=master)
+[![Build Status](https://travis-ci.org/pantheon-systems/ariadne-extensions.svg?branch=master)](https://travis-ci.org/pantheon-systems/ariadne-extensions)
+[![Coverage Status](https://coveralls.io/repos/github/pantheon-systems/ariadne-extensions/badge.svg?branch=master)](https://coveralls.io/github/pantheon-systems/ariadne-extensions?branch=master)
 
 Set of scripts and helper utilities to extend [Ariadne GraphQL library](https://github.com/mirumee/ariadne)
 
 ## Install
 
-`pip install -e git+https://github.com/aleszoulek/ariadne-extensions.git#egg=ariadne-extensions`
+`pip install ariadne-extensions`
 
 ## Features
 
