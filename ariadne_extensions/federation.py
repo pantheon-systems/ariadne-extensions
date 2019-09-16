@@ -83,6 +83,8 @@ class FederatedManager:
     def _get_federated_types(self):
         federated_types = []
         for definition in self.ast_schema.definitions:
+            if not isinstance(definition, ObjectTypeDefinitionNode):
+                continue
             for directive in definition.directives:
                 if directive.name.value == "key":
                     federated_types.append(definition.name.value)
