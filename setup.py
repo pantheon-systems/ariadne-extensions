@@ -19,13 +19,25 @@ TEST_DEPENDECIES = [
     "coveralls",
 ]
 
+CLASSIFIERS = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
 INSTALL_DEPENDECIES = ["ariadne"]
 
 setup(
     name="ariadne-extensions",
+    description="Set of scripts and helper utilities to extend Ariadne GraphQL library",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    version="0.1.3",
+    version="0.1.4",
     url="https://github.com/aleszoulek/ariadne-extensions",
     author="Ales Zoulek",
     author_email="ales.zoulek@gmail.com",
@@ -34,4 +46,5 @@ setup(
     install_requires=INSTALL_DEPENDECIES,
     tests_require=TEST_DEPENDECIES,
     extras_require={"test": TEST_DEPENDECIES},
+    classifiers=CLASSIFIERS,
 )
