@@ -32,16 +32,16 @@ type _Service {{
 """
 
 
-def _convert_resolver(f):
+def _convert_resolver(func):
     """Registered resolve_reference function should take obj and info objects.
     This handles old function and converts them to a new signature, if needed."""
-    sig = signature(f).parameters
+    sig = signature(func).parameters
     if 'obj' in sig and 'info' in sig:
-        return f
+        return func
 
-    @functools.wraps(f)
+    @functools.wraps(func)
     def wrapper(representation, obj=None, info=None):
-        return f(representation)
+        return func(representation)
 
     return wrapper
 
