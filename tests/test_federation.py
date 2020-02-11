@@ -85,11 +85,76 @@ type _Service {
     )
 
 
+class MockedObj:
+    pass
+
+
 def test_service_sdl(federated_schema):
     assert federated_schema.query_type.fields["_service"].resolve() == {"sdl": SDL}
 
 
 def test_resolve_reference(federated_manager):
+    user_type = FederatedObjectType("User")
+
+    @user_type.resolve_reference
+    def resolve_user_reference(representation, obj, info):
+        assert isinstance(obj, MockedObj)
+        assert isinstance(info, Info)
+        user_id = representation.get("id")
+        return User(id=user_id, photos=[])
+
+    federated_manager.add_types(user_type)
+    schema = federated_manager.get_schema()
+
+    assert (
+        schema.query_type.fields["_entities"].resolve(
+            MockedObj(), Info(schema=schema), representations=[]
+        )
+        == []
+    )
+    assert schema.query_type.fields["_entities"].resolve(
+        MockedObj(),
+        Info(schema=schema),
+        representations=[
+            {"__typename": "User", "id": 1},
+            {"__typename": "User", "id": 2},
+            {"__typename": "False", "id": 3},
+        ],
+    ) == [User(id=1, photos=[]), User(id=2, photos=[])]
+
+
+def test_resolve_references(federated_manager):
+    user_type = FederatedObjectType("User")
+
+    @user_type.resolve_references
+    def resolve_user_references(representations, obj, info):
+        assert isinstance(obj, MockedObj)
+        assert isinstance(info, Info)
+
+        return [User(id=r.get("id"), photos=[]) for r in representations]
+
+    federated_manager.add_types(user_type)
+    schema = federated_manager.get_schema()
+
+    assert (
+        schema.query_type.fields["_entities"].resolve(
+            MockedObj(), Info(schema=schema), representations=[]
+        )
+        == []
+    )
+    assert schema.query_type.fields["_entities"].resolve(
+        MockedObj(),
+        Info(schema=schema),
+        representations=[
+            {"__typename": "User", "id": 1},
+            {"__typename": "User", "id": 2},
+            {"__typename": "False", "id": 3},
+        ],
+    ) == [User(id=1, photos=[]), User(id=2, photos=[])]
+
+
+# Deprecated resolve_reference signature still works
+def test_deprecated_resolve_reference(federated_manager):
     user_type = FederatedObjectType("User")
 
     @user_type.resolve_reference
@@ -117,7 +182,7 @@ def test_resolve_reference(federated_manager):
     ) == [User(id=1, photos=[]), User(id=2, photos=[])]
 
 
-def test_resolve_references(federated_manager):
+def test_deprecated_resolve_references(federated_manager):
     user_type = FederatedObjectType("User")
 
     @user_type.resolve_references

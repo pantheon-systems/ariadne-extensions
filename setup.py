@@ -37,7 +37,7 @@ setup(
     description="Set of scripts and helper utilities to extend Ariadne GraphQL library",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    version="0.1.5",
+    version="0.1.6",
     url="https://github.com/aleszoulek/ariadne-extensions",
     author="Ales Zoulek",
     author_email="ales.zoulek@gmail.com",

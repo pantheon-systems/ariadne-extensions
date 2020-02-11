@@ -1,5 +1,6 @@
 # pylint: disable=line-too-long, too-many-arguments
 import functools
+from inspect import signature
 from collections import defaultdict
 
 from graphql import ObjectTypeDefinitionNode, parse
@@ -31,20 +32,37 @@ type _Service {{
 """
 
 
+def _convert_resolver(func):
+    """Registered resolve_reference function should take obj and info objects.
+    This handles old function and converts them to a new signature, if needed."""
+    sig = signature(func).parameters
+    if "obj" in sig and "info" in sig:
+        return func
+
+    @functools.wraps(func)
+    def wrapper(representation, obj=None, info=None):
+        return func(representation)
+
+    return wrapper
+
+
 class FederatedObjectType(ObjectType):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._reference_resolver = None
 
     def resolve_reference(self, resolver):
+        resolver = _convert_resolver(resolver)
+
         @functools.wraps(resolver)
-        def wrapper(params):
-            return [resolver(p) for p in params]
+        def wrapper(params, obj, info):
+            return [resolver(p, obj=obj, info=info) for p in params]
 
         self._reference_resolver = wrapper
         return resolver
 
     def resolve_references(self, resolver):
+        resolver = _convert_resolver(resolver)
         self._reference_resolver = resolver
         return resolver
 
@@ -137,7 +155,7 @@ class FederatedManager:
             graphql_type = info.schema.type_map.get(type_name)
             reference_resolver = getattr(graphql_type, "reference_resolver", None)
             if reference_resolver:
-                ret += reference_resolver(params)
+                ret += reference_resolver(params, obj=obj, info=info)
 
         return ret
 

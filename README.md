@@ -70,7 +70,7 @@ FederatedManager will call this function for every `_entities([{__typename: 'Use
 user_type = federation.FederatedObjectType('User')
 
 @user_type.resolve_reference
-def resolve_user_reference(representation):
+def resolve_user_reference(representation, obj, info):
     user_id = representation.get('id')
     return get_user_by_id(user_id)
 ```
@@ -121,7 +121,7 @@ user_type = federation.FederatedObjectType('User')
 photo_type = ObjectType('Photo')
 
 @user_type.resolve_reference
-def resolve_user_reference(representation):
+def resolve_user_reference(representation, obj, info):
     user_id = representation.get('id')
     return get_user_by_id(user_id)
 
