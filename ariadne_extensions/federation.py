@@ -36,7 +36,7 @@ def _convert_resolver(func):
     """Registered resolve_reference function should take obj and info objects.
     This handles old function and converts them to a new signature, if needed."""
     sig = signature(func).parameters
-    if 'obj' in sig and 'info' in sig:
+    if "obj" in sig and "info" in sig:
         return func
 
     @functools.wraps(func)
@@ -46,7 +46,6 @@ def _convert_resolver(func):
     return wrapper
 
 
-
 class FederatedObjectType(ObjectType):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,6 +53,7 @@ class FederatedObjectType(ObjectType):
 
     def resolve_reference(self, resolver):
         resolver = _convert_resolver(resolver)
+
         @functools.wraps(resolver)
         def wrapper(params, obj, info):
             return [resolver(p, obj=obj, info=info) for p in params]
