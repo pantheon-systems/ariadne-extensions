@@ -85,7 +85,8 @@ type _Service {
     )
 
 
-class MockedObj: pass
+class MockedObj:
+    pass
 
 
 def test_service_sdl(federated_schema):
@@ -150,6 +151,7 @@ def test_resolve_references(federated_manager):
             {"__typename": "False", "id": 3},
         ],
     ) == [User(id=1, photos=[]), User(id=2, photos=[])]
+
 
 # Deprecated resolve_reference signature still works
 def test_deprecated_resolve_reference(federated_manager):
