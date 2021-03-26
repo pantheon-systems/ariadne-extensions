@@ -15,7 +15,7 @@ TEST_DEPENDECIES = [
     "pytest",
     "pylint",
     "pytest-runner",
-    "black",
+    "black==19.3b0",
     "coveralls",
 ]
 
@@ -30,14 +30,14 @@ CLASSIFIERS = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
-INSTALL_DEPENDECIES = ["ariadne"]
+INSTALL_DEPENDECIES = ["ariadne==0.11.0"]
 
 setup(
     name="ariadne-extensions",
     description="Set of scripts and helper utilities to extend Ariadne GraphQL library",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    version="0.1.6",
+    version="0.1.7",
     url="https://github.com/aleszoulek/ariadne-extensions",
     author="Ales Zoulek",
     author_email="ales.zoulek@gmail.com",
