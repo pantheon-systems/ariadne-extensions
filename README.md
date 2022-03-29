@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/pantheon-systems/ariadne-extensions.svg?branch=master)](https://travis-ci.org/pantheon-systems/ariadne-extensions)
 [![Coverage Status](https://coveralls.io/repos/github/pantheon-systems/ariadne-extensions/badge.svg?branch=master)](https://coveralls.io/github/pantheon-systems/ariadne-extensions?branch=master)
+[![Unsupported](https://img.shields.io/badge/Pantheon-Unsupported-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#unsupported)
+
 
 Set of scripts and helper utilities to extend [Ariadne GraphQL library](https://github.com/mirumee/ariadne)
 
