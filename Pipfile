@@ -9,7 +9,6 @@ pytest-cov = "*"
 pylint = "*"
 ipython = "*"
 black = "==19.3b0"
-coveralls = "*"
 
 [packages]
 ariadne = "0.11.0"
