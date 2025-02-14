@@ -16,7 +16,6 @@ TEST_DEPENDECIES = [
     "pylint",
     "pytest-runner",
     "black==19.3b0",
-    "coveralls",
 ]
 
 CLASSIFIERS = [
